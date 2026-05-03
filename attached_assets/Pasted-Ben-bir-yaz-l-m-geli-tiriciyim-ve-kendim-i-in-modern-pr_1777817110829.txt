@@ -1,0 +1,115 @@
+Ben bir yazılım geliştiriciyim ve kendim için modern, profesyonel, hızlı ve mobil uyumlu bir kişisel web sitesi tasarlamak istiyorum.
+
+Site amacı:
+- Kendimi tanıtmak
+- Yaptığım işleri ve projeleri sergilemek
+- Verdiğim hizmetleri anlatmak
+- Potansiyel müşterilerin veya işverenlerin benimle iletişime geçmesini sağlamak
+
+Tasarım tarzı:
+- Modern, sade, teknoloji odaklı
+- Koyu tema ağırlıklı, şık ve profesyonel
+- Minimal ama etkileyici animasyonlar
+- Mobil, tablet ve masaüstü uyumlu
+- Hızlı açılan, SEO uyumlu ve erişilebilir tasarım
+
+Site bölümleri:
+
+1. Hero / Ana Giriş Bölümü
+- Büyük başlık: “Merhaba, ben [Ad Soyad]”
+- Alt başlık: “Yazılım geliştirici olarak web, mobil ve özel yazılım çözümleri geliştiriyorum.”
+- Kısa açıklama: “Modern, performanslı ve kullanıcı odaklı dijital ürünler tasarlıyor ve geliştiriyorum.”
+- Butonlar:
+  - “Projelerimi Gör”
+  - “Benimle İletişime Geç”
+
+2. Hakkımda
+- Yazılım geliştirme deneyimimi anlatan kısa ve etkili bir metin
+- Uzmanlık alanlarım:
+  - Web geliştirme
+  - Frontend geliştirme
+  - Backend geliştirme
+  - Mobil uygulama geliştirme
+  - API entegrasyonları
+  - Veritabanı tasarımı
+  - Özel yazılım çözümleri
+- Çalışma yaklaşımım: temiz kod, performans, ölçeklenebilirlik, kullanıcı deneyimi
+
+3. Hizmetlerim
+Kart yapısında şu hizmetleri göster:
+- Web Sitesi Geliştirme
+  Açıklama: Kurumsal, kişisel veya özel ihtiyaçlara yönelik modern web siteleri.
+- Web Uygulaması Geliştirme
+  Açıklama: Yönetim panelleri, dashboardlar, SaaS projeleri ve özel web uygulamaları.
+- Backend & API Geliştirme
+  Açıklama: Güvenli, hızlı ve ölçeklenebilir backend sistemleri ve API servisleri.
+- Mobil Uygulama Geliştirme
+  Açıklama: iOS ve Android uyumlu modern mobil uygulama çözümleri.
+- Bakım ve Teknik Destek
+  Açıklama: Mevcut projelerin iyileştirilmesi, hata giderme ve performans optimizasyonu.
+
+4. Teknolojiler
+Kullandığım teknolojileri ikonlarla göster:
+- HTML, CSS, JavaScript
+- React / Next.js
+- Node.js
+- Python
+- PHP / Laravel
+- PostgreSQL / MySQL / MongoDB
+- Git / GitHub
+- Docker
+- REST API
+
+5. Projelerim
+Her proje için kart tasarımı oluştur:
+- Proje adı
+- Kısa açıklama
+- Kullanılan teknolojiler
+- Canlı demo linki
+- GitHub linki
+- Görsel alanı
+
+Örnek proje başlıkları:
+- E-ticaret Web Uygulaması
+- Randevu Yönetim Sistemi
+- Kişisel Blog Platformu
+- Admin Panel / Dashboard
+- Mobil Uygulama Projesi
+
+6. Çalışma Sürecim
+Adım adım süreç göster:
+- İhtiyaç analizi
+- Tasarım ve planlama
+- Geliştirme
+- Test ve optimizasyon
+- Yayına alma
+- Destek ve bakım
+
+7. İletişim
+İletişim formu oluştur:
+- Ad Soyad
+- E-posta
+- Konu
+- Mesaj
+- Gönder butonu
+
+Ayrıca şu iletişim alanlarını ekle:
+- E-posta: [email adresin]
+- Telefon: [telefon numaran]
+- LinkedIn: [LinkedIn linkin]
+- GitHub: [GitHub linkin]
+- Konum: [Şehir / Ülke]
+
+8. Footer
+- Kısa açıklama
+- Sosyal medya linkleri
+- Telif hakkı metni: “© 2026 [Ad Soyad]. Tüm hakları saklıdır.”
+
+Ek istekler:
+- Site Türkçe olsun.
+- İçerikler profesyonel ama samimi bir dille yazılsın.
+- SEO için uygun başlıklar ve açıklamalar kullanılsın.
+- Kod yapısı temiz, okunabilir ve geliştirilebilir olsun.
+- Tasarımda yazılım geliştirici kimliğini yansıtan detaylar kullanılsın.
+- CTA butonları dikkat çekici olsun.
+- Sayfa tek sayfalık landing page formatında olabilir.
