@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -21,7 +21,8 @@ import {
   X,
   Send,
   ExternalLink,
-  Settings
+  Settings,
+  Quote
 } from "lucide-react";
 import {
   SiReact,
@@ -35,10 +36,25 @@ import {
   SiDocker,
   SiGit,
   SiHtml5,
+  SiCss,
   SiJavascript,
   SiPhp,
   SiLaravel,
-  SiMysql
+  SiMysql,
+  SiVuedotjs,
+  SiAngular,
+  SiSvelte,
+  SiRust,
+  SiGo,
+  SiRuby,
+  SiKubernetes,
+  SiFirebase,
+  SiGraphql,
+  SiRedis,
+  SiNginx,
+  SiLinux,
+  SiFlutter,
+  SiDjango,
 } from "react-icons/si";
 
 import { Button } from "@/components/ui/button";
@@ -51,24 +67,39 @@ import { loadSiteData, type SiteData } from "@/lib/siteData";
 
 const serviceIcons = [Globe, Terminal, Database, Smartphone, Wrench];
 
-const technologies = [
-  { name: "HTML5", icon: SiHtml5 },
-  { name: "CSS3", icon: SiHtml5 },
-  { name: "JavaScript", icon: SiJavascript },
-  { name: "TypeScript", icon: SiTypescript },
-  { name: "React", icon: SiReact },
-  { name: "Next.js", icon: SiNextdotjs },
-  { name: "Node.js", icon: SiNodedotjs },
-  { name: "Python", icon: SiPython },
-  { name: "PHP", icon: SiPhp },
-  { name: "Laravel", icon: SiLaravel },
-  { name: "PostgreSQL", icon: SiPostgresql },
-  { name: "MySQL", icon: SiMysql },
-  { name: "MongoDB", icon: SiMongodb },
-  { name: "Tailwind", icon: SiTailwindcss },
-  { name: "Docker", icon: SiDocker },
-  { name: "Git", icon: SiGit },
-];
+const techIconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+  "HTML5": SiHtml5,
+  "CSS3": SiCss,
+  "JavaScript": SiJavascript,
+  "TypeScript": SiTypescript,
+  "React": SiReact,
+  "Next.js": SiNextdotjs,
+  "Node.js": SiNodedotjs,
+  "Python": SiPython,
+  "PHP": SiPhp,
+  "Laravel": SiLaravel,
+  "PostgreSQL": SiPostgresql,
+  "MySQL": SiMysql,
+  "MongoDB": SiMongodb,
+  "Tailwind": SiTailwindcss,
+  "Docker": SiDocker,
+  "Git": SiGit,
+  "Vue.js": SiVuedotjs,
+  "Vue": SiVuedotjs,
+  "Angular": SiAngular,
+  "Svelte": SiSvelte,
+  "Rust": SiRust,
+  "Go": SiGo,
+  "Ruby": SiRuby,
+  "Kubernetes": SiKubernetes,
+  "Firebase": SiFirebase,
+  "GraphQL": SiGraphql,
+  "Redis": SiRedis,
+  "Nginx": SiNginx,
+  "Linux": SiLinux,
+  "Flutter": SiFlutter,
+  "Django": SiDjango,
+};
 
 const processSteps = [
   "İhtiyaç analizi",
@@ -85,6 +116,71 @@ const contactFormSchema = z.object({
   subject: z.string().min(3, { message: "Konu en az 3 karakter olmalıdır." }),
   message: z.string().min(10, { message: "Mesajınız çok kısa." })
 });
+
+function RotatingQuotes({ quotes }: { quotes: { text: string; author: string }[] }) {
+  const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (quotes.length <= 1) return;
+
+    function cycle() {
+      setVisible(false);
+      timerRef.current = setTimeout(() => {
+        setIndex(prev => (prev + 1) % quotes.length);
+        setVisible(true);
+        timerRef.current = setTimeout(cycle, 5000);
+      }, 500);
+    }
+
+    timerRef.current = setTimeout(cycle, 5000);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [quotes.length]);
+
+  if (!quotes.length) return null;
+
+  const current = quotes[index % quotes.length];
+
+  return (
+    <section className="py-20 border-t border-white/5 bg-background">
+      <div className="container mx-auto max-w-4xl px-6 text-center">
+        <div className="flex justify-center mb-6">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+            <Quote className="h-5 w-5 text-primary" />
+          </div>
+        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : -10 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.4 }}
+          >
+            <blockquote className="text-xl md:text-2xl font-light text-white/80 italic leading-relaxed mb-4">
+              &ldquo;{current.text}&rdquo;
+            </blockquote>
+            <p className="text-sm font-mono text-primary">— {current.author}</p>
+          </motion.div>
+        </AnimatePresence>
+        {quotes.length > 1 && (
+          <div className="flex justify-center gap-2 mt-6">
+            {quotes.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { setIndex(i); setVisible(true); }}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${i === index ? "bg-primary w-4" : "bg-white/20"}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 function App() {
   const { toast } = useToast();
@@ -115,10 +211,23 @@ function App() {
     defaultValues: { name: "", email: "", subject: "", message: "" }
   });
 
-  function onSubmit(values: z.infer<typeof contactFormSchema>) {
-    console.log(values);
-    toast({ title: "Mesajınız gönderildi!", description: "En kısa sürede size dönüş yapacağım." });
-    form.reset();
+  async function onSubmit(values: z.infer<typeof contactFormSchema>) {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast({ title: "Hata!", description: data.error ?? "Mesaj gönderilemedi.", variant: "destructive" });
+        return;
+      }
+      toast({ title: "Mesajınız gönderildi!", description: "En kısa sürede size dönüş yapacağım." });
+      form.reset();
+    } catch {
+      toast({ title: "Bağlantı hatası!", description: "Sunucuya ulaşılamadı. Lütfen tekrar deneyin.", variant: "destructive" });
+    }
   }
 
   const fadeIn = {
@@ -131,7 +240,7 @@ function App() {
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
   };
 
-  const { hero, about, services, projects, contact } = siteData;
+  const { hero, about, services, projects, contact, technologies, quotes } = siteData;
 
   return (
     <div className="bg-background min-h-screen text-foreground font-sans selection:bg-primary/30 selection:text-primary">
@@ -139,7 +248,7 @@ function App() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-white/5 py-4' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
           <div className="text-xl font-bold font-mono tracking-tighter text-white">
-            <span className="text-primary">&lt;</span>AY<span className="text-primary">/&gt;</span>
+            <span className="text-primary">&lt;</span>ND<span className="text-primary">/&gt;</span>
           </div>
 
           <div className="hidden md:flex space-x-8 items-center text-sm font-medium text-muted-foreground">
@@ -281,26 +390,31 @@ function App() {
         </section>
 
         {/* Technologies Grid */}
-        <section className="py-20 border-y border-white/5 bg-card/30 overflow-hidden">
-          <div className="container mx-auto max-w-6xl px-6 text-center">
-            <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-10">Kullandığım Teknolojiler</p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-              {technologies.map((tech, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="flex flex-col items-center justify-center space-y-3 group" title={tech.name}
-                >
-                  <div className="text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all duration-300">
-                    <tech.icon size={40} />
-                  </div>
-                  <span className="text-xs font-medium text-muted-foreground/0 group-hover:text-muted-foreground transition-colors duration-300">{tech.name}</span>
-                </motion.div>
-              ))}
+        {technologies.length > 0 && (
+          <section className="py-20 border-y border-white/5 bg-card/30 overflow-hidden">
+            <div className="container mx-auto max-w-6xl px-6 text-center">
+              <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-10">Kullandığım Teknolojiler</p>
+              <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+                {technologies.map((tech, index) => {
+                  const Icon = techIconMap[tech.name] ?? Code2;
+                  return (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
+                      className="flex flex-col items-center justify-center space-y-3 group" title={tech.name}
+                    >
+                      <div className="text-muted-foreground group-hover:text-primary group-hover:scale-110 transition-all duration-300">
+                        <Icon size={40} />
+                      </div>
+                      <span className="text-xs font-medium text-muted-foreground/0 group-hover:text-muted-foreground transition-colors duration-300">{tech.name}</span>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Projects Section */}
         <section id="projeler" className="py-24 md:py-32 px-6">
@@ -439,7 +553,7 @@ function App() {
                       <FormItem>
                         <FormLabel className="text-white/70">Ad Soyad</FormLabel>
                         <FormControl>
-                          <Input placeholder="Ahmet Yılmaz" className="bg-background/50 border-white/10 focus-visible:ring-primary h-12" {...field} />
+                          <Input placeholder="Necati DALAR" className="bg-background/50 border-white/10 focus-visible:ring-primary h-12" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -486,11 +600,14 @@ function App() {
         </section>
       </main>
 
+      {/* Rotating Quotes Section */}
+      {quotes && quotes.length > 0 && <RotatingQuotes quotes={quotes} />}
+
       {/* Footer */}
       <footer className="py-8 border-t border-white/5 bg-background text-center md:text-left">
         <div className="container mx-auto px-6 max-w-6xl flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-xl font-bold font-mono tracking-tighter text-white">
-            <span className="text-primary">&lt;</span>AY<span className="text-primary">/&gt;</span>
+            <span className="text-primary">&lt;</span>ND<span className="text-primary">/&gt;</span>
           </div>
           <p className="text-sm text-muted-foreground font-mono">
             © 2026 {hero.name}. Tüm hakları saklıdır.

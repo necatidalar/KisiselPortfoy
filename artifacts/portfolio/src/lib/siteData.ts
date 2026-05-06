@@ -35,17 +35,28 @@ export interface ContactData {
   linkedinUrl: string;
 }
 
+export interface TechItem {
+  name: string;
+}
+
+export interface Quote {
+  text: string;
+  author: string;
+}
+
 export interface SiteData {
   hero: HeroData;
   about: AboutData;
   services: Service[];
   projects: Project[];
   contact: ContactData;
+  technologies: TechItem[];
+  quotes: Quote[];
 }
 
 export const defaultData: SiteData = {
   hero: {
-    name: "Ahmet Yılmaz",
+    name: "Necati DALAR",
     subtitle: "Yazılım geliştirici olarak web, mobil ve özel yazılım çözümleri geliştiriyorum.",
     description: "Modern, performanslı ve kullanıcı odaklı dijital ürünler tasarlıyor ve geliştiriyorum. Her satır kodda kalite ve hızı ön planda tutuyorum.",
     statusText: "Şu an yeni projelere açık",
@@ -111,12 +122,35 @@ export const defaultData: SiteData = {
     },
   ],
   contact: {
-    email: "hello@ahmetyilmaz.dev",
+    email: "hello@necatidalar.dev",
     phone: "+90 (555) 123 45 67",
     location: "İstanbul, Türkiye",
     githubUrl: "#",
     linkedinUrl: "#",
   },
+  technologies: [
+    { name: "HTML5" },
+    { name: "CSS3" },
+    { name: "JavaScript" },
+    { name: "TypeScript" },
+    { name: "React" },
+    { name: "Next.js" },
+    { name: "Node.js" },
+    { name: "Python" },
+    { name: "PHP" },
+    { name: "Laravel" },
+    { name: "PostgreSQL" },
+    { name: "MySQL" },
+    { name: "MongoDB" },
+    { name: "Tailwind" },
+    { name: "Docker" },
+    { name: "Git" },
+  ],
+  quotes: [
+    { text: "Kod yazmak sanattır; her satır bir fırça darbesidir.", author: "Necati DALAR" },
+    { text: "İyi yazılım, kullanıcının ihtiyacını anlamakla başlar.", author: "Necati DALAR" },
+    { text: "Basitlik, mükemmeliyetin zirvesidir.", author: "Leonardo da Vinci" },
+  ],
 };
 
 const STORAGE_KEY = "portfolio_site_data";
@@ -125,7 +159,13 @@ export function loadSiteData(): SiteData {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return defaultData;
-    return { ...defaultData, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    return {
+      ...defaultData,
+      ...parsed,
+      technologies: parsed.technologies ?? defaultData.technologies,
+      quotes: parsed.quotes ?? defaultData.quotes,
+    };
   } catch {
     return defaultData;
   }
